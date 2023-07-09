@@ -2,7 +2,30 @@
 const EMPTY_HEART = '♡'
 const FULL_HEART = '♥'
 
-// Your JavaScript code goes here!
+document.addEventListener('DOMContentLoaded', () => {
+  const likeButtons = document.querySelectorAll('.like');
+
+  likeButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      mimicServerCall()
+        .then(() => {
+          button.classList.toggle('activated-heart');
+          button.querySelector('.like-glyph').textContent = '♥';
+        })
+        .catch(() => {
+          const modal = document.querySelector('#modal');
+          const modalMessage = document.querySelector('#modal-message');
+          modal.classList.remove('hidden');
+          modalMessage.textContent = 'Random server error. Please try again later.';
+
+          setTimeout(() => {
+            modal.classList.add('hidden');
+          }, 3000);
+        });
+    });
+  });
+});
+
 
 
 
